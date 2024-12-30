@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Conference | Face Time</title>
+    <link rel="shortcut icon" href="{% static 'logo/light_logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/videocall.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img id="logoImage" src="{% static 'logo/dark_logo.png' %}" alt="Face Time Logo">
+            <!-- <h1>Face Time</h1> -->
+        </div>
+        <a href="{% url 'dashboard' %}"><button class="button">Dashboard</button></a>
+        <button class="toggle-mode" id="toggleMode">Light Mode</button>
+    </header>
+
+    <div id="root" class="video-container"></div>
+
+    <!-- Import Zego UIKit Prebuilt Library -->
+    <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+    <script>
+        window.onload = function () {
+            function getUrlParams(url) {
+                const urlStr = url.split('?')[1];
+                const urlSearchParams = new URLSearchParams(urlStr);
+                return Object.fromEntries(urlSearchParams.entries());
+            }
+
+            const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
+            const userID = Math.floor(Math.random() * 10000) + "";
+            const userName = "{{ name }}"; // Replace with actual user data
+            const appID = 895156882; // Replace with your Zego appID
+            const serverSecret = "2022f5c8c867feb4e95756fb2d73c6ed"; // Replace with your serverSecret
+
+            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
+
+            const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+            zp.joinRoom({
+                container: document.querySelector("#root"),
+                sharedLinks: [
+                    {
+                        name: 'Personal link',
+                        url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
+                    }
+                ],
+                scenario: {
+                    mode: ZegoUIKitPrebuilt.VideoConference,
+                },
+                turnOnMicrophoneWhenJoining: false,
+                turnOnCameraWhenJoining: false,
+                showMyCameraToggleButton: true,
+                showMyMicrophoneToggleButton: true,
+                showAudioVideoSettingsButton: true,
+                showScreenSharingButton: true,
+                showTextChat: true,
+                showUserList: true,
+                maxUsers: 50,
+                layout: "Grid",
+                showLayoutButton: true,
+            });
+        };
+
+        const toggleMode = document.getElementById("toggleMode");
+        const logoImage = document.getElementById("logoImage");
+
+        toggleMode.addEventListener("click", () => {
+            document.body.classList.toggle("light-mode");
+
+            if (document.body.classList.contains("light-mode")) {
+                toggleMode.innerText = "Dark Mode";
+                logoImage.src = "{% static 'logo/light_logo.png' %}";
+            } else {
+                toggleMode.innerText = "Light Mode";
+                logoImage.src = "{% static 'logo/dark_logo.png' %}";
+            }
+        });
+    </script>
+</body>
+</html>

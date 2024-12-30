@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{ name }}'s Dashboard | Face Time</title>
+  <link rel="shortcut icon" href="{% static 'logo/light_logo.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img id="logoImage" src="{% static 'logo/dark_logo.png' %}" alt="Face Time Logo">
+      <!-- <h1>Face Time</h1> -->
+    </div>
+    <button class="toggle-mode" id="toggleMode">Dark Mode</button>
+  </header>
+  <div class="dashboard">
+    <h1>Welcome to {{ name }}'s Dashboard</h1>
+    <a href="{% url 'meeting' %}" class="button">New Meeting</a>
+    <br>
+    <a href="{% url 'join_room' %}" class="button">Join Meeting</a>
+    <br>
+    <a href="{% url 'logout' %}" class="button logout-button">Logout</a>
+  </div>
+  <script>
+    const toggleMode = document.getElementById("toggleMode");
+    const logoImage = document.getElementById("logoImage");
+
+    toggleMode.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+
+      // Update button text and logo dynamically
+      if (document.body.classList.contains("light-mode")) {
+        toggleMode.innerText = "Dark Mode";
+        logoImage.src = "{% static 'logo/light_logo.png' %}"; // Light mode logo
+      } else {
+        toggleMode.innerText = "Light Mode";
+        logoImage.src = "{% static 'logo/dark_logo.png' %}"; // Dark mode logo
+      }
+    });
+  </script>
+</body>
+</html>

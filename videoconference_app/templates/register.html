@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Signup | Face Time</title>
+  <link rel="shortcut icon" href="{% static 'logo/light_logo.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img id="logoImage" src="{% static 'logo/dark_logo.png' %}" alt="Face Time Logo">
+      <!-- <h1>Face Time</h1> -->
+    </div>
+    <button class="toggle-mode" id="toggleMode">Dark Mode</button>
+  </header>
+  <div class="container">
+    <div class="registration form">
+      <header>Signup</header>
+      <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="Enter your first name" name="first_name" required>
+        <input type="text" placeholder="Enter your last name" name="last_name" required>
+        <input type="email" placeholder="Enter your email" name="email" required>
+        <input type="password" placeholder="Create a password" name="password1" required>
+        <input type="password" placeholder="Confirm your password" name="password2" required>
+        <input type="submit" class="button" value="Signup">
+        <center>
+          {% if error %}
+          <p style="color: red;">{{ error }}</p>
+          {% endif %}
+        </center>
+      </form>
+      <div class="signup">
+        <span>Already have an account?
+          <a href="{% url 'login' %}"><label for="check">Signin</label></a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const toggleMode = document.getElementById("toggleMode");
+    const logoImage = document.getElementById("logoImage");
+
+    toggleMode.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+
+      // Change button text and logo dynamically
+      if (document.body.classList.contains("light-mode")) {
+        toggleMode.innerText = "Dark Mode";
+        logoImage.src = "{% static 'logo/light_logo.png' %}"; // Light mode logo
+      } else {
+        toggleMode.innerText = "Light Mode";
+        logoImage.src = "{% static 'logo/dark_logo.png' %}"; // Dark mode logo
+      }
+    });
+  </script>
+</body>
+</html>

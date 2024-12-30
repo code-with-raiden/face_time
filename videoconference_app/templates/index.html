@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Welcome to Face Time App</title>
+  <link rel="shortcut icon" href="{% static 'logo/light_logo.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <!-- Placeholder for switching logos -->
+      <img id="logoImage" src="{% static 'logo/light_logo.png' %}" alt="Face Time Logo">
+      <!-- <h1>Face Time</h1> -->
+    </div>
+    <button class="toggle-mode" id="toggleMode">Dark Mode</button>
+  </header>
+  <div class="intro">
+      <h1>Welcome to my Face Time App!</h1>
+      <h2>For all your professional and personal needs!</h2>
+      <a href="{% url 'login' %}" class="button">Sign In</a>
+      <a href="{% url 'register' %}" class="button">Sign Up</a>
+  </div>
+  <script>
+    const toggleMode = document.getElementById("toggleMode");
+    const logoImage = document.getElementById("logoImage");
+
+    toggleMode.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+      
+      // Change text and logo based on mode
+      if (document.body.classList.contains("light-mode")) {
+        toggleMode.innerText = "Dark Mode";
+        logoImage.src = "{% static 'logo/light_logo.png' %}"; // Light mode logo
+      } else {
+        toggleMode.innerText = "Light Mode";
+        logoImage.src = "{% static 'logo/dark_logo.png' %}"; // Dark mode logo
+      }
+    });
+  </script>
+</body>
+</html>
