@@ -1,1 +1,1 @@
-web: gunicorn VideoConference_Django.wsgi:application
+web: gunicorn videoconferencing.wsgi:application
