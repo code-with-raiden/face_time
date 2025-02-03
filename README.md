@@ -46,7 +46,8 @@ Access the live project here: [Booble Shooter](https://face-time-2ei1.onrender.c
 ### Installation Steps
 1. Clone the repository:
    ```bash
- https://github.com/code-with-raiden/face_time.git
+    https://github.com/code-with-raiden/face_time.git
+ 
    cd face_time
 
 
