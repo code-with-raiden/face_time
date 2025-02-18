@@ -6,7 +6,7 @@
 
 # Face Time
 
-Booble Shooter is a web application that allows users to participate in video conferencing. The project is built with Django and deployed on [Render](https://render.com).
+Face time  is a web application that allows users to participate in video conferencing. The project is built with Django and deployed on [Render](https://render.com).
 
 ## Project Link
 Access the live project here: [Face Time](https://face-time-2ei1.onrender.com)
